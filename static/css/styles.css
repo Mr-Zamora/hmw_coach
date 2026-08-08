@@ -205,7 +205,8 @@ label {
 }
 
 input[type="text"],
-textarea {
+textarea,
+select {
   width: 100%;
   border: 2px solid var(--border);
   border-radius: var(--radius-sm);
@@ -221,7 +222,8 @@ textarea {
 }
 
 input[type="text"]:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
   border-color: var(--accent);
   background: #fff;
 }

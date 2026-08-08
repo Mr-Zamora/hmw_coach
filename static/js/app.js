@@ -115,13 +115,13 @@ function initStart() {
   continueWrap.style.display = hasHMW ? 'block' : 'none';
 
   document.getElementById('input-name').value = state.name || '';
-  document.getElementById('input-class').value = state.class || '';
+  document.getElementById('input-class').value = state.class || '10dt';
 
   document.getElementById('btn-start').addEventListener('click', () => {
     const name = document.getElementById('input-name').value.trim();
     const cls = document.getElementById('input-class').value.trim();
-    if (!name || !cls) {
-      alert('Please enter your name and class to continue.');
+    if (!name) {
+      alert('Please enter your name to continue.');
       return;
     }
     state = defaultState();
@@ -222,7 +222,7 @@ function renderPersona() {
 
   document.getElementById('btn-persona-back').onclick = () => {
     document.getElementById('input-name').value = state.name || '';
-    document.getElementById('input-class').value = state.class || '';
+    document.getElementById('input-class').value = state.class || '10dt';
     showScreen('screen-start');
   };
 }
@@ -750,7 +750,7 @@ document.addEventListener('DOMContentLoaded', () => {
       state = defaultState();
       saveState();
       document.getElementById('input-name').value = '';
-      document.getElementById('input-class').value = '';
+      document.getElementById('input-class').value = '10dt';
       document.getElementById('continue-wrap').style.display = 'none';
       showScreen('screen-start');
     });
