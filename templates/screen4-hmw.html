@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HMW Options — 3×3 HMW Coach</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+  <header class="app-header">
+    <span class="app-logo">HMW Coach</span>
+    <span class="step-label">Step 4 of 5</span>
+  </header>
+
+  <div class="progress-dots">
+    <div class="dot done"></div>
+    <div class="dot done"></div>
+    <div class="dot done"></div>
+    <div class="dot active"></div>
+    <div class="dot"></div>
+  </div>
+
+  <div class="card">
+    <div class="persona-chip">🎮 The Gamer</div>
+
+    <h2>Here are your HMW options</h2>
+    <p class="subtitle">Tap through and pick the one that fits your concept best.</p>
+
+    <div class="hmw-stack">
+      <div class="hmw-card-shadow s2"></div>
+      <div class="hmw-card-shadow s1"></div>
+      <div class="hmw-card-front">
+        <div class="hmw-option-label">Option 1 of 3</div>
+        <div class="hmw-text">How might we let a dedicated gamer end a late-night session quietly — without noise, light, or gear scattered across the floor bleeding into the sleeping zone 1.5 m away?</div>
+        <div class="hmw-divider"></div>
+        <div class="hmw-why-label">Why it passes</div>
+        <div class="hmw-why-text">Fails without 9 m²: in a larger home, the gaming room has a door. Fails Swap Test if swapped: a content creator's breakdown is about equipment visibility, not noise/light at night.</div>
+      </div>
+    </div>
+
+    <div class="hmw-nav">
+      <div class="hmw-nav-dot active"></div>
+      <div class="hmw-nav-dot"></div>
+      <div class="hmw-nav-dot"></div>
+    </div>
+
+    <button class="btn btn-primary">This one ✓</button>
+    <button class="btn btn-ghost">None of these — try again</button>
+  </div>
+
+</body>
+</html>

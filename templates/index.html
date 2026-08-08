@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3×3 HMW Coach</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+  <!-- ============ SCREEN 0: START ============ -->
+  <section id="screen-start" class="screen active">
+    <div class="card card-start">
+      <img src="{{ url_for('static', filename='images/header.png') }}" alt="3×3 Living Space Challenge — HMW Coach" class="start-hero">
+
+      <div class="form-group" style="text-align:left">
+        <label for="input-name">Your name</label>
+        <input type="text" id="input-name" placeholder="e.g. Jordan Smith">
+      </div>
+
+      <div class="form-group" style="text-align:left">
+        <label for="input-class">Class</label>
+        <input type="text" id="input-class" placeholder="e.g. 10DT-A">
+      </div>
+
+      <button class="btn btn-primary" id="btn-start">Start →</button>
+
+      <div id="continue-wrap" style="display:none">
+        <div class="divider"></div>
+        <a href="#" class="continue-link" id="btn-continue">↩ Continue where I left off</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 1: PERSONA ============ -->
+  <section id="screen-persona" class="screen">
+    <header class="app-header">
+      <span class="app-logo">HMW Coach</span>
+      <span class="step-label">Step 1 of 5</span>
+    </header>
+    <div class="progress-dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+    <div class="card">
+      <h2>Who is your persona?</h2>
+      <p class="subtitle">Pick the one that fits your concept.</p>
+      <div class="choice-group" id="persona-choices"></div>
+      <button class="btn btn-primary btn-disabled" id="btn-persona-next">Next →</button>
+      <button class="btn btn-ghost" id="btn-persona-back">← Back</button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 1b: PERSONA FOLLOW-UP ============ -->
+  <section id="screen-followup" class="screen">
+    <header class="app-header">
+      <span class="app-logo">HMW Coach</span>
+      <span class="step-label">Step 1 of 5</span>
+    </header>
+    <div class="progress-dots">
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+    <div class="card">
+      <div class="persona-chip" id="followup-persona-chip"></div>
+      <div class="card-tag green" id="followup-q-count" style="text-align:left;margin-bottom:12px;"></div>
+      <h2 id="followup-question"></h2>
+      <p class="subtitle" id="followup-subtitle"></p>
+      <textarea id="followup-answer" placeholder="Type your answer here..."></textarea>
+      <button class="btn btn-primary" id="btn-followup-next" style="margin-top:16px">Next →</button>
+      <button class="btn btn-ghost" id="btn-followup-back">← Back</button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 2: GENUINE NEED ============ -->
+  <section id="screen-need" class="screen">
+    <header class="app-header">
+      <span class="app-logo">HMW Coach</span>
+      <span class="step-label">Step 2 of 5</span>
+    </header>
+    <div class="progress-dots">
+      <div class="dot done"></div>
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+    <div class="card">
+      <div class="persona-chip" id="need-persona-chip"></div>
+      <h2>What's the specific moment things get hard?</h2>
+      <p class="subtitle">Describe one moment when your persona's session is interrupted by another zone in the room.</p>
+      <textarea id="need-answer" placeholder="e.g. When they're mid-session and need to cook, steam from the kitchen drifts directly over their open equipment because..."></textarea>
+      <div class="char-hint">Be specific — name which zone gets in the way</div>
+
+      <div id="need-feedback-area"></div>
+
+      <button class="btn btn-primary" id="btn-need-check" style="margin-top:16px">Check my answer →</button>
+      <button class="btn btn-primary" id="btn-need-proceed" style="display:none">Keep going →</button>
+      <button class="btn btn-ghost" id="btn-need-back">← Back</button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 3: SOLUTION ============ -->
+  <section id="screen-solution" class="screen">
+    <header class="app-header">
+      <span class="app-logo">HMW Coach</span>
+      <span class="step-label">Step 3 of 5</span>
+    </header>
+    <div class="progress-dots">
+      <div class="dot done"></div>
+      <div class="dot done"></div>
+      <div class="dot active"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+    <div class="card">
+      <div class="persona-chip" id="solution-persona-chip"></div>
+      <h2>What's your proposed solution?</h2>
+      <p class="subtitle">Pick a type, then describe it in a sentence or two.</p>
+
+      <div class="choice-group" id="solution-type-choices">
+        <button class="btn-choice" data-type="Product">
+          <span class="choice-icon">📦</span>
+          <div>
+            <div class="choice-title">Product</div>
+            <div class="choice-sub">A single object — something you make or buy</div>
+          </div>
+        </button>
+        <button class="btn-choice" data-type="System">
+          <span class="choice-icon">⚙️</span>
+          <div>
+            <div class="choice-title">System</div>
+            <div class="choice-sub">Connected parts or steps that work together</div>
+          </div>
+        </button>
+        <button class="btn-choice" data-type="Environment">
+          <span class="choice-icon">🏠</span>
+          <div>
+            <div class="choice-title">Environment</div>
+            <div class="choice-sub">A full room redesign — layout, zones, infrastructure</div>
+          </div>
+        </button>
+      </div>
+
+      <div class="form-group">
+        <label>Describe your solution</label>
+        <textarea id="solution-answer" placeholder="e.g. A fold-out acoustic panel that deploys from the wall between the gaming zone and the sleeping zone..."></textarea>
+        <div class="char-hint">1–2 sentences is fine</div>
+      </div>
+
+      <div id="solution-feedback-area"></div>
+
+      <button class="btn btn-primary btn-disabled" id="btn-solution-check">Check my answer →</button>
+      <button class="btn btn-primary" id="btn-solution-proceed" style="display:none">Keep going →</button>
+      <button class="btn btn-ghost" id="btn-solution-back">← Back</button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 4: HMW OPTIONS ============ -->
+  <section id="screen-hmw" class="screen">
+    <header class="app-header">
+      <span class="app-logo">HMW Coach</span>
+      <span class="step-label">Step 4 of 5</span>
+    </header>
+    <div class="progress-dots">
+      <div class="dot done"></div>
+      <div class="dot done"></div>
+      <div class="dot done"></div>
+      <div class="dot active"></div>
+      <div class="dot"></div>
+    </div>
+    <div class="card">
+      <div class="persona-chip" id="hmw-persona-chip"></div>
+      <h2>Here are your HMW options</h2>
+      <p class="subtitle">Tap through and pick the one that fits your concept best.</p>
+
+      <div class="hmw-stack">
+        <div class="hmw-card-shadow s2"></div>
+        <div class="hmw-card-shadow s1"></div>
+        <div class="hmw-card-front" id="hmw-card-front">
+          <div id="hmw-card-content">
+            <div class="hmw-option-label" id="hmw-option-label"></div>
+            <div class="hmw-text" id="hmw-text"></div>
+            <div class="hmw-divider"></div>
+            <div class="hmw-why-label">Why it passes</div>
+            <div class="hmw-why-text" id="hmw-why-text"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hmw-tap-hint" id="hmw-tap-hint" style="display:none">Tap the card to preview the next option</div>
+      <div class="hmw-nav" id="hmw-nav"></div>
+
+      <button class="btn btn-primary" id="btn-hmw-select">This one ✓</button>
+      <button class="btn btn-ghost" id="btn-hmw-retry">None of these — try again</button>
+      <button class="btn btn-ghost" id="btn-hmw-back">← Back</button>
+    </div>
+  </section>
+
+  <!-- ============ SCREEN 5: LOCK IN ============ -->
+  <section id="screen-lockin" class="screen">
+    <header class="app-header">
+      <span class="app-logo">HMW Coach</span>
+      <span class="step-label">Done ✓</span>
+    </header>
+    <div class="progress-dots">
+      <div class="dot done"></div>
+      <div class="dot done"></div>
+      <div class="dot done"></div>
+      <div class="dot done"></div>
+      <div class="dot active"></div>
+    </div>
+    <div class="card">
+      <div class="success-ring">✓</div>
+      <h2 style="text-align:center;margin-bottom:18px">Your HMW Statement</h2>
+
+      <div class="hmw-final-box">
+        <div class="hmw-final-label">For your folio</div>
+        <div class="hmw-final-text" id="lockin-hmw-text"></div>
+      </div>
+
+      <div class="justifications">
+        <div class="just-row">
+          <span class="just-tag">Swap Test</span>
+          <span class="just-val" id="lockin-swap"></span>
+        </div>
+        <div class="just-row">
+          <span class="just-tag">Spatial</span>
+          <span class="just-val" id="lockin-spatial"></span>
+        </div>
+        <div class="just-row">
+          <span class="just-tag">Floor-space</span>
+          <div class="just-val">
+            <div class="arrow-flow" id="lockin-arrow"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-directions">
+        <h3 style="text-align:center;margin-bottom:14px;font-size:16px;color:var(--text-head)">Design directions for this HMW</h3>
+        <div class="design-row">
+          <span class="design-tag">Product</span>
+          <span class="design-val" id="lockin-product"></span>
+        </div>
+        <div class="design-row">
+          <span class="design-tag">System</span>
+          <span class="design-val" id="lockin-system"></span>
+        </div>
+        <div class="design-row">
+          <span class="design-tag">Environment</span>
+          <span class="design-val" id="lockin-environment"></span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <button class="btn btn-primary" id="btn-copy">Copy to clipboard</button>
+      <div id="copy-confirm" style="display:none;text-align:center;font-size:13px;color:var(--pass);margin-top:8px;font-weight:600;">Copied ✓</div>
+      <button class="btn btn-ghost" id="btn-lockin-back">← Back to options</button>
+    </div>
+  </section>
+
+  <script>
+    const STATIC_BASE = "{{ url_for('static', filename='') }}";
+  </script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

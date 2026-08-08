@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proposed Solution — 3×3 HMW Coach</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+  <header class="app-header">
+    <span class="app-logo">HMW Coach</span>
+    <span class="step-label">Step 3 of 5</span>
+  </header>
+
+  <div class="progress-dots">
+    <div class="dot done"></div>
+    <div class="dot done"></div>
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <div class="card">
+    <div class="persona-chip">🎮 The Gamer</div>
+
+    <h2>What's your proposed solution?</h2>
+
+    <div class="choice-group">
+      <button class="btn-choice selected">
+        <span class="choice-icon">📦</span>
+        <div>
+          <div class="choice-title">Product</div>
+          <div class="choice-sub">A single object — something you make or buy</div>
+        </div>
+      </button>
+    </div>
+
+    <div class="form-group">
+      <label>Your description</label>
+      <textarea>A gaming desk with built-in cable management and storage shelves for controllers.</textarea>
+    </div>
+
+    <div class="feedback-box fail">
+      <span class="feedback-icon">⚠️</span>
+      <div class="feedback-body">
+        <div class="feedback-label">Needs work — Swap Test</div>
+        <div class="feedback-text">This desk would work identically for a student, a graphic designer, or anyone else — the Gamer's specific problem isn't built into it. Try connecting the solution directly to the zone-conflict moment.</div>
+      </div>
+    </div>
+
+    <div class="attempt-counter">
+      <div class="attempt-pips">
+        <div class="pip used"></div>
+        <div class="pip"></div>
+        <div class="pip"></div>
+      </div>
+      <span>Attempt 1 of 3</span>
+    </div>
+
+    <button class="btn btn-primary">Try again →</button>
+  </div>
+
+</body>
+</html>

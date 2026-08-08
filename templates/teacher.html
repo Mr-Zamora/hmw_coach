@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teacher View — 3×3 HMW Coach</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body class="teacher">
+
+  <div class="teacher-header">
+    <div>
+      <div class="teacher-title">3×3 HMW Coach — Teacher View</div>
+      <div class="teacher-subtitle">Class: <strong>{{ class_name }}</strong> &nbsp;&middot;&nbsp; {{ records|length }} submission{{ 's' if records|length != 1 else '' }}</div>
+    </div>
+    <button class="btn btn-secondary" style="width:auto;padding:10px 18px;font-size:14px">Export CSV ↓</button>
+  </div>
+
+  <div class="teacher-table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Persona</th>
+          <th>Final HMW statement</th>
+          <th>Design directions (selected)</th>
+          <th>All HMW options</th>
+          <th>Submitted</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for r in records %}
+        <tr>
+          <td><strong>{{ r.name }}</strong></td>
+          <td><span class="persona-pill">{{ r.persona }}</span></td>
+          <td class="td-hmw">{{ r.finalHMW }}</td>
+          <td class="td-hmw">
+            <div class="design-mini"><strong>P:</strong> {{ r.designProduct }}</div>
+            <div class="design-mini"><strong>S:</strong> {{ r.designSystem }}</div>
+            <div class="design-mini"><strong>E:</strong> {{ r.designEnvironment }}</div>
+          </td>
+          <td class="td-hmw">
+            <ul class="teacher-options-list">
+              {% for opt in r.allHMWOptions %}
+              <li class="{% if opt.hmw == r.finalHMW %}selected-hmw{% endif %}">
+                <strong>{{ opt.hmw }}</strong>
+                {% if opt.designDirections %}
+                <br><small>Product:</small> {{ opt.designDirections.product }}
+                <br><small>System:</small> {{ opt.designDirections.system }}
+                <br><small>Environment:</small> {{ opt.designDirections.environment }}
+                {% endif %}
+              </li>
+              {% endfor %}
+            </ul>
+          </td>
+          <td class="td-time">{{ r.timestamp }}</td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="6" style="text-align:center;color:var(--text-muted);padding:32px;">No submissions yet for this class.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>

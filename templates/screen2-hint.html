@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Genuine Need — 3×3 HMW Coach</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+  <header class="app-header">
+    <span class="app-logo">HMW Coach</span>
+    <span class="step-label">Step 2 of 5</span>
+  </header>
+
+  <div class="progress-dots">
+    <div class="dot done"></div>
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <div class="card">
+    <div class="persona-chip">🎮 The Gamer</div>
+
+    <h2>What's the specific moment things get hard?</h2>
+
+    <textarea>He needs more desk space for his controllers and headset but there's nowhere to put them.</textarea>
+
+    <div class="feedback-box fail" style="margin-top:14px">
+      <span class="feedback-icon">⚠️</span>
+      <div class="feedback-body">
+        <div class="feedback-label">Needs work</div>
+        <div class="feedback-text">Still sounds like a storage problem that any home could have. The 9 m² squeeze isn't doing any real work here.</div>
+      </div>
+    </div>
+
+    <div class="attempt-counter">
+      <div class="attempt-pips">
+        <div class="pip used"></div>
+        <div class="pip used"></div>
+        <div class="pip used"></div>
+      </div>
+      <span>3 of 3 attempts used</span>
+    </div>
+
+    <div class="hint-box">
+      <div class="hint-label">💡 Worked example — use this as inspiration</div>
+      <div class="hint-text">
+        "When he finishes a session late at night, he can't pack away his headset and controllers without waking up his partner — because the sleeping zone is only 1.5 m from his gaming setup and there's no barrier between them."
+        <br><br>
+        Notice: a specific moment, a named zone conflict, and a reason it only happens because of the shared 9 m².
+      </div>
+    </div>
+
+    <button class="btn btn-primary">Keep going →</button>
+    <button class="btn btn-ghost">Edit my answer first</button>
+  </div>
+
+</body>
+</html>

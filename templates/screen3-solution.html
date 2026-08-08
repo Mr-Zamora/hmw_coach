@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proposed Solution — 3×3 HMW Coach</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+  <header class="app-header">
+    <span class="app-logo">HMW Coach</span>
+    <span class="step-label">Step 3 of 5</span>
+  </header>
+
+  <div class="progress-dots">
+    <div class="dot done"></div>
+    <div class="dot done"></div>
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <div class="card">
+    <div class="persona-chip">🎮 The Gamer</div>
+
+    <h2>What's your proposed solution?</h2>
+    <p class="subtitle">Pick a type, then describe it in a sentence or two.</p>
+
+    <div class="choice-group">
+      <button class="btn-choice">
+        <span class="choice-icon">📦</span>
+        <div>
+          <div class="choice-title">Product</div>
+          <div class="choice-sub">A single object — something you make or buy</div>
+        </div>
+      </button>
+      <button class="btn-choice">
+        <span class="choice-icon">⚙️</span>
+        <div>
+          <div class="choice-title">System</div>
+          <div class="choice-sub">Connected parts or steps that work together</div>
+        </div>
+      </button>
+      <button class="btn-choice">
+        <span class="choice-icon">🏠</span>
+        <div>
+          <div class="choice-title">Environment</div>
+          <div class="choice-sub">A full room redesign — layout, zones, infrastructure</div>
+        </div>
+      </button>
+    </div>
+
+    <div class="form-group">
+      <label>Describe your solution</label>
+      <textarea placeholder="e.g. A fold-out acoustic panel that deploys from the wall between the gaming zone and the sleeping zone..."></textarea>
+      <div class="char-hint">1–2 sentences is fine</div>
+    </div>
+
+    <button class="btn btn-primary btn-disabled">Check my answer →</button>
+  </div>
+
+</body>
+</html>

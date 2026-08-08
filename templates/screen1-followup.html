@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Persona Detail — 3×3 HMW Coach</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+  <header class="app-header">
+    <span class="app-logo">HMW Coach</span>
+    <span class="step-label">Step 1 of 5</span>
+  </header>
+
+  <div class="progress-dots">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <div class="card">
+    <div class="persona-chip">🎮 The Gamer</div>
+
+    <div class="card-tag green" style="text-align:left;margin-bottom:12px;">Question 1 of 3</div>
+    <h2>Who is this person?</h2>
+    <p class="subtitle">Describe their lifestyle and what they're mainly doing in this space.</p>
+
+    <textarea placeholder="e.g. She works 12-hour overnight shifts and sleeps during the day. When she gets home she needs to decompress quickly before sleeping..."></textarea>
+    <div class="char-hint">2–3 sentences is plenty</div>
+
+    <button class="btn btn-primary" style="margin-top:16px">Next →</button>
+  </div>
+
+</body>
+</html>

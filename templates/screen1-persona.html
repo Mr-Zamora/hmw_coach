@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Persona — 3×3 HMW Coach</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+  <header class="app-header">
+    <span class="app-logo">HMW Coach</span>
+    <span class="step-label">Step 1 of 5</span>
+  </header>
+
+  <div class="progress-dots">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <div class="card">
+    <h2>Who is your persona?</h2>
+    <p class="subtitle">Pick the one that fits your concept.</p>
+
+    <div class="choice-group">
+      <button class="btn-choice">
+        <img class="choice-img" src="{{ url_for('static', filename='images/Screenshot 2026-08-08 195638.png') }}" alt="Gamer">
+        <div>
+          <div class="choice-title">The Gamer</div>
+          <div class="choice-sub">Hardcore sessions, peripherals, performance setup</div>
+        </div>
+      </button>
+      <button class="btn-choice">
+        <img class="choice-img" src="{{ url_for('static', filename='images/Screenshot 2026-08-08 195644.png') }}" alt="Content Creator">
+        <div>
+          <div class="choice-title">The Content Creator</div>
+          <div class="choice-sub">Recording, lighting, camera gear, editing workflow</div>
+        </div>
+      </button>
+      <button class="btn-choice">
+        <img class="choice-img" src="{{ url_for('static', filename='images/Screenshot 2026-08-08 195650.png') }}" alt="Sports Obsessive">
+        <div>
+          <div class="choice-title">The Sports Obsessive</div>
+          <div class="choice-sub">Gear, training, recovery, nutrition routine</div>
+        </div>
+      </button>
+    </div>
+
+    <button class="btn btn-primary btn-disabled">Next →</button>
+  </div>
+
+</body>
+</html>

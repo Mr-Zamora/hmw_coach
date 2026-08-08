@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your HMW Statement — 3×3 HMW Coach</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+
+  <header class="app-header">
+    <span class="app-logo">HMW Coach</span>
+    <span class="step-label">Done ✓</span>
+  </header>
+
+  <div class="progress-dots">
+    <div class="dot done"></div>
+    <div class="dot done"></div>
+    <div class="dot done"></div>
+    <div class="dot done"></div>
+    <div class="dot active"></div>
+  </div>
+
+  <div class="card">
+    <div class="success-ring">✓</div>
+
+    <h2 style="text-align:center;margin-bottom:18px">Your HMW Statement</h2>
+
+    <div class="hmw-final-box">
+      <div class="hmw-final-label">For your folio</div>
+      <div class="hmw-final-text">How might we let a dedicated gamer end a late-night session quietly — without noise, light, or gear scattered across the floor bleeding into the sleeping zone 1.5 m away?</div>
+    </div>
+
+    <div class="justifications">
+      <div class="just-row">
+        <span class="just-tag">Swap Test</span>
+        <span class="just-val">This problem is specific to a gamer ending a late-night session — a different persona's breakdown would involve different senses, timings, or zones.</span>
+      </div>
+      <div class="just-row">
+        <span class="just-tag">Spatial</span>
+        <span class="just-val">The noise and light bleed only matters because the sleeping zone is 1.5 m away with no wall or door between them — a standard home removes this conflict entirely.</span>
+      </div>
+      <div class="just-row">
+        <span class="just-tag">Floor-space</span>
+        <div class="just-val">
+          <div class="arrow-flow">
+            <span class="arrow-step">Gaming session</span>
+            <span class="arrow-sep">→</span>
+            <span class="arrow-step">Pack-down</span>
+            <span class="arrow-sep">→</span>
+            <span class="arrow-step">Sleep zone active</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <button class="btn btn-primary">Copy to clipboard</button>
+  </div>
+
+</body>
+</html>
