@@ -14,7 +14,7 @@ Built for a 14-year-old audience: short screens, one question at a time, minimal
 | Backend | Python 3 + Flask |
 | Templating | Jinja2 |
 | Frontend | Vanilla JS (fetch calls to Flask endpoints), no framework needed |
-| AI model | Google Gemini 2.5 Flash (`gemini-2.5-flash`), called server-side only (key never exposed to browser) |
+| AI model | Google Gemini 3.5 Flash Lite (`gemini-3.5-flash-lite`), called server-side only (key never exposed to browser) |
 | Student-side storage | Browser `localStorage` — last attempt only, editable |
 | Teacher-side storage | JSON file per class on the server (`/data/records/<class>.json`), appended to on each completed session |
 | Hosting | PythonAnywhere |
@@ -23,16 +23,18 @@ Built for a 14-year-old audience: short screens, one question at a time, minimal
 
 Two of your answers weren't finalised, so I've defaulted them. Tell me if either is wrong and I'll update the spec:
 
-- **Student identification:** defaulted to **name + class typed in at the start** (no login system). This is what ties a localStorage record and a JSON entry together. If you'd rather use a teacher-issued class code instead, that's a small change.
+- **Student identification:** **name** plus a class **dropdown** with `10dt` selected by default. Other classes can be added by editing the `<select>` in `templates/index.html`.
 - **Gemini API key:** defaulted to **"not yet obtained — guidance needed."** Spec below includes exactly how to get one and store it safely on PythonAnywhere as an environment variable (never hardcoded, never sent to the browser).
 - **Persona scope:** fixed list only — **Gamer, Content Creator, Sports Obsessive**. No custom persona option.
 
 ## 4. User flow
 
 ### Screen 0 — Start
-- Name, class (text inputs)
-- "Continue where I left off" button appears automatically if a localStorage record exists for this browser
-- Big single "Start" button
+- Name (text input)
+- Class (dropdown, defaults to `10dt`)
+- Header image (`static/images/header.png`)
+- "Continue where I left off" appears only if a student has already selected an HMW
+- Clicking the **HMW Coach** logo resets the session and returns to the start screen
 
 ### Screen 1 — Persona (hardcoded, multiple choice)
 - Buttons: Gamer / Content Creator / Sports Obsessive
@@ -40,28 +42,31 @@ Two of your answers weren't finalised, so I've defaulted them. Tell me if either
 
 ### Screen 2 — Genuine need (hardcoded short-answer, AI-critiqued)
 - One text box: "Describe one specific moment your session gets interrupted by another zone."
-- On submit → Gemini call runs the **Large-Home Test** and **Floor-Space Conversion Test** against the answer
+- On submit → Gemini call runs the **Spatial Test** against the answer
 - AI returns: Pass/Needs work + one short plain-language reason (max ~40 words, written for a 14-year-old, no jargon)
 - If "Needs work," student edits and resubmits (max 3 attempts shown as a small counter, then a "keep going" hint offers a worked example prompt — not an auto-answer)
 
 ### Screen 3 — Proposed solution (hardcoded multiple choice)
 - Buttons: Product / System / Environment
 - Short-answer text box: "Describe it in 1–2 sentences"
-- On submit → Gemini runs **Swap Test** + **Large-Home Test** + **Floor-Space Conversion Test** against the full picture so far
+- On submit → Gemini runs **Swap Test** + **Spatial Test** against the full picture so far
 - Same Pass/Needs work + short reason pattern as Screen 2
 
 ### Screen 4 — HMW generation
-- Gemini generates 2–3 HMW options using the locked template structure from the coaching prompt (persona, transition, competing zones, why-it-passes-each-test)
-- Displayed as swipeable/stacked cards (short, scannable — no walls of text)
-- Buttons under each: "This one" / "None of these — try again"
+- Gemini generates 2–3 HMW options, each with Swap Test, Spatial Test and floor-space justifications
+- Each option also includes product, system and environment design directions
+- Displayed as a clickable card with an animated loading state
+- Click the card to cycle through options; the last card loops back to the first
+- Buttons: "This one" and "None of these — try again"
 
 ### Screen 5 — Lock in
 - Final HMW statement
 - One-line Swap Test justification
 - One-line spatial justification
 - Floor-space conversion arrow format: `First use → activity → next use`
-- "Copy to clipboard" button (client-side, copies full HMW statement + justifications as formatted text)
-- Save triggers: (1) write/update localStorage record, (2) POST to Flask to append to the class JSON file
+- Product, system and environment design directions for the chosen HMW
+- "Copy to clipboard" button (client-side, copies the HMW statement, justifications and design directions)
+- Save triggers: (1) write/update localStorage record, (2) POST to Flask to append the final record and all generated HMW options to the class JSON file
 
 ## 5. Data model
 
@@ -71,13 +76,36 @@ Two of your answers weren't finalised, so I've defaulted them. Tell me if either
   "name": "string",
   "class": "string",
   "persona": "string",
+  "personaKey": "string",
   "personaAnswers": ["string","string","string"],
+  "followupIndex": 0,
   "genuineNeed": "string",
+  "needAttempts": 0,
+  "needLastFeedback": "string",
   "solutionType": "Product|System|Environment",
   "solutionDescription": "string",
+  "solutionAttempts": 0,
+  "solutionLastFeedback": "string",
   "testResults": [ { "screen": "genuineNeed|solution", "pass": true, "feedback": "string" } ],
-  "hmwOptions": ["string","string","string"],
+  "hmwOptions": [
+    {
+      "hmw": "string",
+      "swapJustification": "string",
+      "spatialJustification": "string",
+      "floorSpaceConversion": ["string","string","string"],
+      "designDirections": { "product": "string", "system": "string", "environment": "string" }
+    }
+  ],
+  "hmwIndex": 0,
   "finalHMW": "string",
+  "designProduct": "string",
+  "designSystem": "string",
+  "designEnvironment": "string",
+  "swapJustification": "string",
+  "spatialJustification": "string",
+  "floorSpaceConversion": ["string","string","string"],
+  "lastSavedHMW": "string",
+  "currentScreen": "string",
   "lastUpdated": "ISO timestamp"
 }
 ```
@@ -94,7 +122,11 @@ Two of your answers weren't finalised, so I've defaulted them. Tell me if either
     "finalHMW": "string",
     "swapJustification": "string",
     "spatialJustification": "string",
-    "floorSpaceConversion": "string"
+    "floorSpaceConversion": ["string","string","string"],
+    "designProduct": "string",
+    "designSystem": "string",
+    "designEnvironment": "string",
+    "allHMWOptions": [ { ... } ]
   }
 ]
 ```
@@ -114,32 +146,36 @@ All Gemini calls happen **only** inside these Flask routes — the API key lives
 
 ## 7. AI prompting approach
 
-Each `/api/check-answer` call sends Gemini a system-style instruction reusing the exact Test A/B/C logic from the original coaching prompt, plus the student's current answer and prior context, with an explicit instruction to:
+Each `/api/check-answer` call sends Gemini a system-style instruction reusing the Swap Test and Spatial Test logic, plus the student's current answer and prior context, with an explicit instruction to:
 - Respond in strict JSON only: `{"pass": true|false, "feedback": "..."}`
 - Keep feedback under ~40 words, plain language, no jargon, encouraging but honest (matches the original prompt's tone)
 
-`/api/generate-hmw` reuses the HMW template and "why it passes each test" structure from the original prompt, again requesting strict JSON so the frontend can render cards without parsing free text.
+`/api/generate-hmw` reuses the HMW template and "why it passes each test" structure from the original prompt, again requesting strict JSON so the frontend can render cards without parsing free text. Each generated option also includes `designDirections` (product, system, environment suggestions).
 
 ## 8. UX notes for a 14-year-old, impatient user
 
 - One question per screen, large tap targets, no scrolling walls of text
-- Progress dots at the top (Screen 1 of 5) so they know how much is left
+- Progress dots at the top (Step 1 of 5) so they know how much is left
 - Feedback is short and direct — "why it failed" in one sentence, not a paragraph
 - "Keep going" hint after repeated fails, rather than blocking progress entirely
 - Autosave to localStorage after every screen, so closing the tab mid-way doesn't lose work
+- HMW cards can be clicked to cycle through options; an animated loading spinner appears while options are generated
+- The **HMW Coach** header logo is clickable and resets the whole session
+- Teacher view fills the full screen width and shrinks on mobile
 
 ## 9. Setup steps (PythonAnywhere + Gemini key)
 
-1. Get a Gemini API key from Google AI Studio (free tier is fine for classroom volume).
-2. On PythonAnywhere: Web tab → your app → Environment variables → add `GEMINI_API_KEY`.
-3. In Flask, read it with `os environ.get("GEMINI_API_KEY")` — never hardcode it in the repo.
-4. Reload the web app after adding the variable.
+1. Copy `.env.example` to `.env` and add `GEMINI_API_KEY` for local use, or set it on PythonAnywhere.
+2. See `deploy.md` for full PythonAnywhere deployment steps.
 
 ## 10. Resolved decisions
 
 - **AI model:** `gemini-3.5-flash-lite`, chosen for speed. (`gemini-2.5-flash` returned a 404 "no longer available to new users" on this API key; `gemma-4-26b-a4b-it` was tested but rejected — it emits chain-of-thought reasoning before the JSON answer even in JSON mode, which breaks strict parsing. `gemini-3.5-flash-lite` returns clean, directly-parseable JSON.)
-- **Test naming:** The three display names (Swap Test, Large-Home Test, Floor-Space Conversion Test) map to two underlying AI tests — Test A (Swap) and Test B (Spatial). "Large-Home Test" and "Floor-Space Conversion Test" are the two angles of Test B shown to students; the Floor-Space Conversion arrow format (`First use → activity → next use`) is an output format, not a separate AI call.
+- **Tests:** Two AI tests — the **Swap Test** (would it work identically for a different persona?) and the **Spatial Test** (does the 3×3 m constraint make the problem real?). Floor-space conversion is a visual output, not a separate test call.
 - **Retry behaviour:** After 3 failed attempts on either Screen 2 or Screen 3, show a worked-example hint and allow the student to proceed regardless. Behaviour is identical on both screens.
+- **Design directions:** Each HMW option now suggests product, system and environment directions; the chosen set is shown on the lock-in screen and saved with the teacher record.
+- **Class input:** Changed from a text field to a dropdown defaulting to `10dt`.
+- **Teacher view:** Full-width table with all generated HMW options visible.
 - **Teacher page auth:** None for now. Add later if needed.
 - **Scale:** 1 class, ~30 students. Flat JSON files per class are sufficient.
 
